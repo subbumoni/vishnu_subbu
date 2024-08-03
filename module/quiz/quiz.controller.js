@@ -1,8 +1,7 @@
-const QuizRouter = require('express').Router();
-
+const QuizRouter = require("express").Router();
 
 // Importing models
-const QuizModel=require("./Quiz.model.js")
+const QuizModel = require("./Quiz.model.js");
 
 QuizRouter.get("/", (req, res, next) => {
   QuizModel.find()
@@ -15,6 +14,22 @@ QuizRouter.get("/", (req, res, next) => {
       });
     })
     .catch((error) => console.log(error));
+});
+QuizRouter.get("/quizId", (req, res, next) => {
+  const { quizId } = req.params;
+  QuizModel.findOne({ _id: quizId })
+    .then((response) => {
+      res.status(200).json({
+        message: "Quiz fetched successfully",
+        data: response,
+      });
+    })
+    .catch((error) => {
+      return res.status(500).json({
+        error: error.message,
+        message: "something went wrong",
+      });
+    });
 });
 
 QuizRouter.post("/create", async (req, res, next) => {
@@ -33,8 +48,10 @@ QuizRouter.post("/create", async (req, res, next) => {
   //             error:error.message,
   //             message:"Something went wrong",
   //      })
-  //    }
-  const Quiz = new QuizModel(req.body);
+    //    }
+  
+    const Quiz = new QuizModel(req.body);
+      console.log(Quiz)
   Quiz.save()
     .then((response) => {
       if (response._id) {

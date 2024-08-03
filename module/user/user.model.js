@@ -1,21 +1,24 @@
-const mongoose=require('mongoose')
-const UserRouter = require('./user.controller')
+const mongoose = require("mongoose");
+const UserRouter = require("./user.controller");
 
-const Userschema=mongoose.Schema({
+const UserSchema = mongoose.Schema(
+  {
     name: {
-        type: String,
-        required:true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required:true,
+      type: String,
+      required: true,
     },
     password: {
-        type: String,
-        require:true,
+      type: String,
+      require: true,
     },
-},{timestamps:true})
+  },
+  { timestamps: true }
+);
 
-const UserModel = mongoose.model("user", Userschema)
+const UserModel = mongoose.model("user", UserSchema);
 
-module.exports = UserRouter;
+module.exports = UserModel;
